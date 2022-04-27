@@ -3,11 +3,11 @@ import processing.data.TableRow; //Importing table func
 
 public class Nematode {
     //private variables
-    private String name;
-    private String gender; //m, f, h, n
-    private int length;
-    private int limbs = 0; //no limbs
-    private int eyes = 0; //no eyes
+    public String name;
+    public String gender; //m, f, h, n
+    public int length;
+    public int limbs = 0; //no limbs
+    public int eyes = 0; //no eyes
 
     //constructor
     public Nematode(String name, String gender, int length, int limbs, int eyes) {
