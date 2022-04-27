@@ -1,6 +1,7 @@
 package ie.tudublin;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import processing.core.PApplet;
 import processing.data.Table;
@@ -10,11 +11,15 @@ public class NematodeVisualiser extends PApplet
 {
 	//variables for drawNematode
 	public float border;
-    public int i = 0; //counter
+    public int i = 0; //iteration counter for nematodes
+
+	//variable for random colour picker
+	public int[] rgb = {0,0,0};
 
 	//Create an array list for Nematodes
 	public ArrayList<Nematode> nematodes = new ArrayList<Nematode>();
 
+	//Left and right keys function - slide through nematode data
 	public void keyPressed()
 	{		
 		if (keyCode == LEFT)
@@ -24,6 +29,9 @@ public class NematodeVisualiser extends PApplet
                 i = nematodes.size() - 1;
             else
                 i--;
+
+			//Calls random colour picker
+			newColor();
         }
         if (keyCode == RIGHT)
         {
@@ -32,16 +40,31 @@ public class NematodeVisualiser extends PApplet
                 i = 0;
             else
                 i++;
+
+			//Calls random colour picker
+			newColor();
         }  	
 	}
 
+	//Func - Random colour picker
+	public void newColor()
+	{
+		Random rand = new Random();
+		int rgbH = 255, rgbL = 150;
+
+		//Assign random RGB values to the RGB array
+		rgb[0] = rand.nextInt(rgbH - rgbL) + rgbL;
+		rgb[1] = rand.nextInt(rgbH - rgbL) + rgbL;
+		rgb[2] = rand.nextInt(rgbH - rgbL) + rgbL;
+	}
 
 	public void settings()
 	{
 		//Create size of application
 		size(800, 700);
 
-		//Call load and print functions
+		//Call colour, load and print functions
+		newColor();
 		loadNematodes();
 		printNematodes();
 	}
@@ -81,8 +104,8 @@ public class NematodeVisualiser extends PApplet
 	}
 
     void drawNematode() {
-		//white and line (sz3)
-        stroke(255, 0, 255);
+		//Color of text and nematode, with a stroke size of 3
+        stroke(rgb[0], rgb[1], rgb[2]);
         strokeWeight(3);
 
 		//location of nematode in x-axis & y-axis and size 
@@ -98,7 +121,7 @@ public class NematodeVisualiser extends PApplet
         int limb = nematodes.get(i).limbs;
 		int eyes = nematodes.get(i).eyes;
 		
-		//Eyes -> one line and a small circle to where line ends
+		//Eyes -> one line and a small circle to where line ends, only if eyes is true (1)
 		if (eyes == 1)
         {
 			//Left eye
@@ -124,7 +147,7 @@ public class NematodeVisualiser extends PApplet
             y = y + size;
         }
 
-		//F, M, H, N(No display)
+		//Check gender between F, M, H, N(No display)
 		if (gender.charAt(0) == 'f') {
             ellipse(x, y - size, size / 2, size / 2); //Add another small circle into the last one
         }
@@ -138,7 +161,8 @@ public class NematodeVisualiser extends PApplet
             ellipse(x, y + size / 7, size / 5, size / 5);
         }
 
-		//Name positioning and font size
+		//Name positioning, font size and display
+		fill(rgb[0], rgb[1], rgb[2]);
 		textAlign(CENTER);
 		text(name, width / 2, height / 7);
 		textSize(20);
