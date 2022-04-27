@@ -92,9 +92,23 @@ public class NematodeVisualiser extends PApplet
         noFill();
 
 		//variables
+		String name = nematodes.get(i).name;
 		String gender = nematodes.get(i).gender;
         int length = nematodes.get(i).length;
         int limb = nematodes.get(i).limbs;
+		int eyes = nematodes.get(i).eyes;
+		
+		//Eyes -> one line and a small circle to where line ends
+		if (eyes == 1)
+        {
+			//Left eye
+            line(x - size / 3, y - size / 2, x - size / 2, y - Math.round(size / 1.5)); 
+            ellipse(x - (size / 2) - (size / 6), y - Math.round(size / 1.5) - (size / 8), size / 5, size / 5);
+			
+			//Right Eye
+            line(x + size / 3, y - size / 2, x + size / 2, y - Math.round(size / 1.5));
+            ellipse(x + size / 2 + (size / 6), y - Math.round(size / 1.5) - (size / 8), size / 5, size / 5);
+        }
 
         //Body -> length = 1 circle
         for(int i = 0; i < length; i++) 
@@ -123,5 +137,10 @@ public class NematodeVisualiser extends PApplet
             line(x, y - size / 2, x, y);
             ellipse(x, y + size / 7, size / 5, size / 5);
         }
+
+		//Name positioning and font size
+		textAlign(CENTER);
+		text(name, width / 2, height / 7);
+		textSize(20);
     }
 }
